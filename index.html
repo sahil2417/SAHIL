@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sahil | Portfolio</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -27,10 +27,8 @@ scroll-behavior:smooth;
 body{
 background:linear-gradient(135deg,var(--bg-dark),var(--bg-light));
 color:var(--text-light);
-overflow-x:hidden;
 }
 
-/* HEADER */
 header{
 position:fixed;
 width:100%;
@@ -51,7 +49,7 @@ padding:15px 8%;
 }
 
 .logo{
-font-size:24px;
+font-size:26px;
 font-weight:700;
 font-family:'Orbitron',sans-serif;
 background:linear-gradient(45deg,var(--primary),var(--accent));
@@ -82,11 +80,11 @@ background:radial-gradient(circle at top left,#1e3a8a,#0a0f1c);
 }
 
 .hero h1{
-font-size:48px;
+font-size:50px;
 font-family:'Orbitron',sans-serif;
-background:linear-gradient(45deg,#3b82f6,#8b5cf6);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
 }
 
 .typing{ color:var(--primary); font-weight:700; }
@@ -111,7 +109,7 @@ text-align:center;
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
 gap:40px;
-margin-top:40px;
+margin-top:50px;
 }
 
 .project-card{
@@ -119,7 +117,7 @@ background:rgba(255,255,255,0.05);
 padding:25px;
 border-radius:20px;
 border:1px solid rgba(255,255,255,0.1);
-transition:.4s;
+transition:0.4s;
 }
 
 .project-card:hover{
@@ -127,17 +125,11 @@ transform:translateY(-10px);
 box-shadow:0 20px 40px rgba(59,130,246,0.3);
 }
 
-input, textarea{
-width:80%;
-padding:10px;
-margin:10px 0;
-border-radius:8px;
-border:none;
-}
-
-ul{
-list-style:none;
-padding:0;
+canvas{
+background:#111827;
+border-radius:10px;
+margin:15px auto;
+display:block;
 }
 
 footer{
@@ -145,11 +137,6 @@ background:#0a0f1c;
 padding:20px;
 text-align:center;
 color:#9ca3af;
-margin-top:50px;
-}
-
-@media(max-width:768px){
-.hero h1{font-size:32px;}
 }
 </style>
 </head>
@@ -158,7 +145,7 @@ margin-top:50px;
 
 <header id="header">
 <nav class="navbar">
-<div class="logo">Sahil</div>
+<div class="logo">My Portfolio</div>
 <ul class="nav-links">
 <li><a href="#home">Home</a></li>
 <li><a href="#projects">Projects</a></li>
@@ -174,30 +161,22 @@ margin-top:50px;
 </section>
 
 <section id="projects">
-<h2>My Projects</h2>
+<h2>My Games</h2>
 
 <div class="project-grid">
 
-<!-- Task Manager -->
+<!-- Snake Game -->
 <div class="project-card">
-<h3>Task Manager App</h3>
-<p>Manage your daily tasks easily.</p>
-
-<input type="text" id="taskInput" placeholder="Enter task...">
-<br>
-<button class="btn" onclick="addTask()">Add Task</button>
-<ul id="taskList"></ul>
+<h3>Snake Game</h3>
+<canvas id="snakeGame" width="260" height="180"></canvas>
+<button class="btn" onclick="startSnake()">Start</button>
 </div>
 
-<!-- Weather App -->
+<!-- Pong Game -->
 <div class="project-card">
-<h3>Weather App</h3>
-<p>Check weather by city name.</p>
-
-<input type="text" id="cityInput" placeholder="Enter city...">
-<br>
-<button class="btn" onclick="getWeather()">Check Weather</button>
-<p id="weatherResult"></p>
+<h3>Pong Game</h3>
+<canvas id="pongGame" width="260" height="180"></canvas>
+<button class="btn" onclick="startPong()">Start</button>
 </div>
 
 </div>
@@ -205,16 +184,7 @@ margin-top:50px;
 
 <section id="contact">
 <h2>Contact Me</h2>
-
-<form id="contactForm">
-<input type="text" id="name" placeholder="Your Name" required>
-<input type="email" id="email" placeholder="Your Email" required>
-<textarea id="message" placeholder="Your Message" required></textarea>
-<br>
-<button type="submit" class="btn">Send Message</button>
-</form>
-
-<p id="formStatus"></p>
+<p>Email: sahil@email.com</p>
 </section>
 
 <footer>
@@ -223,16 +193,15 @@ margin-top:50px;
 
 <script>
 
-/* Navbar Scroll Effect */
+/* Navbar Scroll */
 window.addEventListener("scroll",()=>{
 document.getElementById("header")
 .classList.toggle("scrolled",window.scrollY>50);
 });
 
 /* Typing Effect */
-const words=["Frontend Developer","Creative Designer","Freelancer"];
+const words=["Frontend Developer","Creative Designer"];
 let i=0,j=0,current="",isDeleting=false;
-
 function type(){
 if(i<words.length){
 if(!isDeleting && j<=words[i].length){
@@ -253,56 +222,107 @@ document.getElementById("contact")
 .scrollIntoView({behavior:"smooth"});
 }
 
-/* Task Manager */
-function addTask(){
-const input=document.getElementById("taskInput");
-if(input.value.trim()==="") return;
+/* ================= SNAKE GAME ================= */
+let sCanvas=document.getElementById("snakeGame");
+let sCtx=sCanvas.getContext("2d");
+let snake,food,dir,sInterval;
 
-const li=document.createElement("li");
-li.textContent=input.value;
-li.style.margin="8px 0";
-li.style.cursor="pointer";
-li.onclick=()=>li.remove();
-
-document.getElementById("taskList").appendChild(li);
-input.value="";
+function startSnake(){
+snake=[{x:5,y:5}];
+dir="RIGHT";
+food={x:10,y:5};
+clearInterval(sInterval);
+sInterval=setInterval(snakeLoop,100);
 }
 
-/* Weather App */
-async function getWeather(){
-const city=document.getElementById("cityInput").value;
-const result=document.getElementById("weatherResult");
+document.addEventListener("keydown",e=>{
+if(!dir) return;
+if(e.key==="ArrowUp" && dir!=="DOWN")dir="UP";
+if(e.key==="ArrowDown" && dir!=="UP")dir="DOWN";
+if(e.key==="ArrowLeft" && dir!=="RIGHT")dir="LEFT";
+if(e.key==="ArrowRight" && dir!=="LEFT")dir="RIGHT";
+});
 
-if(city==="") return;
+function snakeLoop(){
+sCtx.clearRect(0,0,260,180);
+let head={...snake[0]};
+if(dir==="UP")head.y--;
+if(dir==="DOWN")head.y++;
+if(dir==="LEFT")head.x--;
+if(dir==="RIGHT")head.x++;
 
-const apiKey="YOUR_API_KEY"; // Put your OpenWeather API key
-const url=`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+if(head.x<0||head.x>12||head.y<0||head.y>8||
+snake.some(s=>s.x===head.x&&s.y===head.y)){
+clearInterval(sInterval);
+alert("Game Over!");
+return;
+}
 
-try{
-const response=await fetch(url);
-const data=await response.json();
+snake.unshift(head);
 
-if(data.cod===200){
-result.innerHTML=`
-🌍 ${data.name} <br>
-🌡 ${data.main.temp}°C <br>
-☁ ${data.weather[0].main}
-`;
+if(head.x===food.x && head.y===food.y){
+food={
+x:Math.floor(Math.random()*13),
+y:Math.floor(Math.random()*9)
+};
 }else{
-result.innerHTML="City not found!";
-}
-}catch{
-result.innerHTML="Error fetching data.";
-}
+snake.pop();
 }
 
-/* Contact Form Demo */
-document.getElementById("contactForm")
-.addEventListener("submit",function(e){
-e.preventDefault();
-document.getElementById("formStatus")
-.innerText="✅ Message Sent Successfully!";
-this.reset();
+sCtx.fillStyle="#3b82f6";
+snake.forEach(s=>sCtx.fillRect(s.x*20,s.y*20,18,18));
+
+sCtx.fillStyle="#f97316";
+sCtx.fillRect(food.x*20,food.y*20,18,18);
+}
+
+/* ================= PONG GAME ================= */
+let pCanvas=document.getElementById("pongGame");
+let pCtx=pCanvas.getContext("2d");
+let paddle,ball,pInterval;
+
+function startPong(){
+paddle={x:100,y:160,w:60,h:10};
+ball={x:130,y:150,r:6,vx:3,vy:-3};
+clearInterval(pInterval);
+pInterval=setInterval(pongLoop,20);
+}
+
+function pongLoop(){
+pCtx.clearRect(0,0,260,180);
+
+pCtx.fillStyle="#3b82f6";
+pCtx.fillRect(paddle.x,paddle.y,paddle.w,paddle.h);
+
+ball.x+=ball.vx;
+ball.y+=ball.vy;
+
+if(ball.x<0||ball.x>260)ball.vx*=-1;
+if(ball.y<0)ball.vy*=-1;
+
+if(ball.y+ball.r>=paddle.y &&
+ball.x>=paddle.x &&
+ball.x<=paddle.x+paddle.w){
+ball.vy*=-1;
+}
+
+if(ball.y>180){
+clearInterval(pInterval);
+alert("Game Over!");
+}
+
+pCtx.fillStyle="#f97316";
+pCtx.beginPath();
+pCtx.arc(ball.x,ball.y,ball.r,0,Math.PI*2);
+pCtx.fill();
+}
+
+document.addEventListener("keydown",e=>{
+if(!paddle) return;
+if(e.key==="ArrowLeft")paddle.x-=15;
+if(e.key==="ArrowRight")paddle.x+=15;
+if(paddle.x<0)paddle.x=0;
+if(paddle.x>200)paddle.x=200;
 });
 
 </script>
