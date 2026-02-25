@@ -132,6 +132,21 @@ margin:15px auto;
 display:block;
 }
 
+.contact-form{
+max-width:500px;
+margin:auto;
+margin-top:40px;
+}
+
+.contact-form input,
+.contact-form textarea{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:8px;
+border:none;
+}
+
 footer{
 background:#0a0f1c;
 padding:20px;
@@ -165,14 +180,12 @@ color:#9ca3af;
 
 <div class="project-grid">
 
-<!-- Snake Game -->
 <div class="project-card">
 <h3>Snake Game</h3>
 <canvas id="snakeGame" width="260" height="180"></canvas>
 <button class="btn" onclick="startSnake()">Start</button>
 </div>
 
-<!-- Pong Game -->
 <div class="project-card">
 <h3>Pong Game</h3>
 <canvas id="pongGame" width="260" height="180"></canvas>
@@ -184,7 +197,17 @@ color:#9ca3af;
 
 <section id="contact">
 <h2>Contact Me</h2>
-<p>Email: sahil@email.com</p>
+
+<div class="contact-form">
+<form id="contactForm">
+<input type="text" placeholder="Your Name" required>
+<input type="email" placeholder="Your Email" required>
+<textarea rows="5" placeholder="Your Message" required></textarea>
+<button type="submit" class="btn">Send Message</button>
+</form>
+<p id="formMessage"></p>
+</div>
+
 </section>
 
 <footer>
@@ -222,7 +245,14 @@ document.getElementById("contact")
 .scrollIntoView({behavior:"smooth"});
 }
 
-/* ================= SNAKE GAME ================= */
+/* Contact Form */
+document.getElementById("contactForm").addEventListener("submit",function(e){
+e.preventDefault();
+document.getElementById("formMessage").innerText="✅ Message Sent Successfully!";
+this.reset();
+});
+
+/* Snake Game */
 let sCanvas=document.getElementById("snakeGame");
 let sCtx=sCanvas.getContext("2d");
 let snake,food,dir,sInterval;
@@ -261,22 +291,19 @@ return;
 snake.unshift(head);
 
 if(head.x===food.x && head.y===food.y){
-food={
-x:Math.floor(Math.random()*13),
-y:Math.floor(Math.random()*9)
-};
+food={x:Math.floor(Math.random()*13),
+y:Math.floor(Math.random()*9)};
 }else{
 snake.pop();
 }
 
 sCtx.fillStyle="#3b82f6";
 snake.forEach(s=>sCtx.fillRect(s.x*20,s.y*20,18,18));
-
 sCtx.fillStyle="#f97316";
 sCtx.fillRect(food.x*20,food.y*20,18,18);
 }
 
-/* ================= PONG GAME ================= */
+/* Pong Game */
 let pCanvas=document.getElementById("pongGame");
 let pCtx=pCanvas.getContext("2d");
 let paddle,ball,pInterval;
@@ -290,7 +317,6 @@ pInterval=setInterval(pongLoop,20);
 
 function pongLoop(){
 pCtx.clearRect(0,0,260,180);
-
 pCtx.fillStyle="#3b82f6";
 pCtx.fillRect(paddle.x,paddle.y,paddle.w,paddle.h);
 
