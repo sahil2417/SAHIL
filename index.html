@@ -19,189 +19,56 @@
 --text-light:#f1f5f9;
 }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-scroll-behavior:smooth;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;scroll-behavior:smooth;}
+body{background:linear-gradient(135deg,var(--bg-dark),var(--bg-light));color:var(--text-light);}
 
-body{
-background:linear-gradient(135deg,var(--bg-dark),var(--bg-light));
-color:var(--text-light);
-}
+header{position:fixed;width:100%;top:0;z-index:1000;transition:.4s;}
+header.scrolled{background:rgba(15,23,42,0.9);backdrop-filter:blur(10px);}
 
-header{
-position:fixed;
-width:100%;
-top:0;
-z-index:1000;
-transition:.4s;
-}
-header.scrolled{
-background:rgba(15,23,42,0.9);
-backdrop-filter:blur(10px);
-}
-
-.navbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px 8%;
-}
-
-.logo{
-font-size:28px;
-font-weight:700;
-font-family:'Orbitron',sans-serif;
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:15px 8%;}
+.logo{font-size:28px;font-weight:700;font-family:'Orbitron',sans-serif;
 background:linear-gradient(45deg,var(--primary),var(--accent));
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
-.nav-links{
-list-style:none;
-display:flex;
-}
-.nav-links li{ margin-left:25px; }
+.nav-links{list-style:none;display:flex;}
+.nav-links li{margin-left:25px;}
+.nav-links a{text-decoration:none;color:var(--text-light);font-weight:500;}
 
-.nav-links a{
-text-decoration:none;
-color:var(--text-light);
-font-weight:500;
-}
+.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+background:radial-gradient(circle at top left,#1e3a8a,#0f172a);}
 
-.hero{
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-background:radial-gradient(circle at top left,#1e3a8a,#0f172a);
-}
-
-.hero h1{
-font-size:55px;
-font-family:'Orbitron',sans-serif;
-background: linear-gradient(45deg,var(--primary),var(--accent));
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-}
-
-.typing{ color:var(--primary); font-weight:700; }
-
-.btn{
-margin-top:20px;
-padding:12px 30px;
-border-radius:50px;
-border:none;
-cursor:pointer;
-font-weight:600;
+.hero h1{font-size:55px;font-family:'Orbitron',sans-serif;
 background:linear-gradient(45deg,var(--primary),var(--accent));
-color:white;
-transition:.3s;
-}
-.btn:hover{
-transform:scale(1.05);
-box-shadow:0 10px 25px rgba(168,85,247,0.5);
-}
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
-section{
-padding:120px 8%;
-text-align:center;
-}
+.typing{color:var(--primary);font-weight:700;}
 
-h2{
-font-size:36px;
-margin-bottom:40px;
+.btn{margin-top:20px;padding:12px 30px;border-radius:50px;border:none;cursor:pointer;
+font-weight:600;background:linear-gradient(45deg,var(--primary),var(--accent));
+color:white;transition:.3s;}
+.btn:hover{transform:scale(1.05);box-shadow:0 10px 25px rgba(168,85,247,0.5);}
+
+section{padding:120px 8%;text-align:center;}
+h2{font-size:36px;margin-bottom:40px;
 background:linear-gradient(45deg,var(--primary),var(--accent));
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
-/* ===== SKILLS ===== */
-.skills-container{
-max-width:600px;
-margin:auto;
-}
+.skills-container{max-width:600px;margin:auto;}
+.skill{margin:25px 0;text-align:left;}
+.skill-bar{background:#334155;border-radius:20px;overflow:hidden;height:20px;margin-top:8px;}
+.skill-fill{height:100%;width:0;border-radius:20px;transition:1.5s ease-in-out;}
 
-.skill{
-margin:25px 0;
-text-align:left;
-}
+.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;margin-top:50px;}
+.project-card{background:rgba(255,255,255,0.05);padding:25px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);transition:0.4s;}
+.project-card:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(56,189,248,0.3);}
 
-.skill span{
-font-weight:600;
-}
+canvas{background:#0f172a;border-radius:10px;margin:15px auto;display:block;}
 
-.skill-bar{
-background:#334155;
-border-radius:20px;
-overflow:hidden;
-height:20px;
-margin-top:8px;
-}
+.contact-form{max-width:500px;margin:auto;}
+.contact-form input,.contact-form textarea{
+width:100%;padding:12px;margin:10px 0;border-radius:8px;border:none;background:#334155;color:white;}
 
-.skill-fill{
-height:100%;
-width:0;
-border-radius:20px;
-transition:1.5s ease-in-out;
-}
-
-/* ===== PROJECTS ===== */
-.project-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:40px;
-margin-top:50px;
-}
-
-.project-card{
-background:rgba(255,255,255,0.05);
-padding:25px;
-border-radius:20px;
-border:1px solid rgba(255,255,255,0.1);
-transition:0.4s;
-}
-
-.project-card:hover{
-transform:translateY(-10px);
-box-shadow:0 20px 40px rgba(56,189,248,0.3);
-}
-
-canvas{
-background:#0f172a;
-border-radius:10px;
-margin:15px auto;
-display:block;
-}
-
-/* ===== CONTACT ===== */
-.contact-form{
-max-width:500px;
-margin:auto;
-}
-
-.contact-form input,
-.contact-form textarea{
-width:100%;
-padding:12px;
-margin:10px 0;
-border-radius:8px;
-border:none;
-background:#334155;
-color:white;
-}
-
-footer{
-background:#0f172a;
-padding:20px;
-text-align:center;
-color:#94a3b8;
-}
+footer{background:#0f172a;padding:20px;text-align:center;color:#94a3b8;}
 </style>
 </head>
 
@@ -225,7 +92,6 @@ color:#94a3b8;
 <button class="btn" onclick="scrollToContact()">Hire Me</button>
 </section>
 
-<!-- SKILLS SECTION -->
 <section id="skills">
 <h2>My Skills</h2>
 <div class="skills-container">
@@ -254,19 +120,20 @@ color:#94a3b8;
 </div>
 </section>
 
-<!-- PROJECTS -->
 <section id="projects">
 <h2>My Games</h2>
 <div class="project-grid">
 
 <div class="project-card">
 <h3>Snake Game</h3>
+<p>Score: <span id="snakeScore">0</span></p>
 <canvas id="snakeGame" width="260" height="180"></canvas>
 <button class="btn" onclick="startSnake()">Start</button>
 </div>
 
 <div class="project-card">
 <h3>Pong Game</h3>
+<p>Score: <span id="pongScore">0</span></p>
 <canvas id="pongGame" width="260" height="180"></canvas>
 <button class="btn" onclick="startPong()">Start</button>
 </div>
@@ -274,7 +141,6 @@ color:#94a3b8;
 </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
 <h2>Contact Me</h2>
 <div class="contact-form">
@@ -305,11 +171,8 @@ const words=["Frontend Developer","Creative Designer"];
 let i=0,j=0,current="",isDeleting=false;
 function type(){
 if(i<words.length){
-if(!isDeleting && j<=words[i].length){
-current=words[i].substring(0,j++);
-}else if(isDeleting && j>=0){
-current=words[i].substring(0,j--);
-}
+if(!isDeleting && j<=words[i].length){current=words[i].substring(0,j++);}
+else if(isDeleting && j>=0){current=words[i].substring(0,j--);}
 document.querySelector(".typing").textContent=current;
 if(j==words[i].length)isDeleting=true;
 if(j==0 && isDeleting){isDeleting=false;i++;}
@@ -321,9 +184,7 @@ type();
 /* Skill Animation */
 window.addEventListener("scroll",()=>{
 document.querySelectorAll(".skill-fill").forEach(bar=>{
-let position=bar.getBoundingClientRect().top;
-let screen=window.innerHeight;
-if(position<screen){
+if(bar.getBoundingClientRect().top<window.innerHeight){
 bar.style.width=bar.getAttribute("data-width");
 }
 });
@@ -341,11 +202,132 @@ document.getElementById("formMessage").innerText="✅ Message Sent Successfully!
 this.reset();
 });
 
-/* Snake & Pong Same As Before */
-/* (Keeping your existing game code unchanged) */
+/* ================= SNAKE GAME ================= */
+let snakeInterval;
+function startSnake(){
+clearInterval(snakeInterval);
+const canvas=document.getElementById("snakeGame");
+const ctx=canvas.getContext("2d");
+let box=15;
+let snake=[{x:120,y:90}];
+let direction="RIGHT";
+let score=0;
+document.getElementById("snakeScore").innerText=0;
+
+let food={
+x:Math.floor(Math.random()*(canvas.width/box))*box,
+y:Math.floor(Math.random()*(canvas.height/box))*box
+};
+
+document.onkeydown=function(e){
+if(e.key==="ArrowLeft"&&direction!=="RIGHT")direction="LEFT";
+if(e.key==="ArrowUp"&&direction!=="DOWN")direction="UP";
+if(e.key==="ArrowRight"&&direction!=="LEFT")direction="RIGHT";
+if(e.key==="ArrowDown"&&direction!=="UP")direction="DOWN";
+};
+
+function draw(){
+ctx.fillStyle="#0f172a";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+snake.forEach((s,i)=>{
+ctx.fillStyle=i==0?"#38bdf8":"#a855f7";
+ctx.fillRect(s.x,s.y,box,box);
+});
+
+ctx.fillStyle="#facc15";
+ctx.fillRect(food.x,food.y,box,box);
+
+let headX=snake[0].x;
+let headY=snake[0].y;
+
+if(direction==="LEFT")headX-=box;
+if(direction==="UP")headY-=box;
+if(direction==="RIGHT")headX+=box;
+if(direction==="DOWN")headY+=box;
+
+if(headX<0||headY<0||headX>=canvas.width||headY>=canvas.height){
+clearInterval(snakeInterval);
+alert("Game Over 🐍");
+return;
+}
+
+if(headX===food.x&&headY===food.y){
+score++;
+document.getElementById("snakeScore").innerText=score;
+food={
+x:Math.floor(Math.random()*(canvas.width/box))*box,
+y:Math.floor(Math.random()*(canvas.height/box))*box
+};
+}else{snake.pop();}
+
+snake.unshift({x:headX,y:headY});
+}
+
+snakeInterval=setInterval(draw,100);
+}
+
+/* ================= PONG GAME ================= */
+let pongInterval;
+function startPong(){
+clearInterval(pongInterval);
+const canvas=document.getElementById("pongGame");
+const ctx=canvas.getContext("2d");
+
+let paddleHeight=50,paddleWidth=8;
+let playerY=canvas.height/2-paddleHeight/2;
+let aiY=playerY;
+let ballX=canvas.width/2,ballY=canvas.height/2;
+let ballSize=6;
+let speedX=3,speedY=3;
+let score=0;
+document.getElementById("pongScore").innerText=0;
+
+canvas.onmousemove=function(e){
+let rect=canvas.getBoundingClientRect();
+playerY=e.clientY-rect.top-paddleHeight/2;
+};
+
+function draw(){
+ctx.fillStyle="#0f172a";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#38bdf8";
+ctx.fillRect(0,playerY,paddleWidth,paddleHeight);
+
+ctx.fillStyle="#a855f7";
+ctx.fillRect(canvas.width-paddleWidth,aiY,paddleWidth,paddleHeight);
+
+ctx.fillStyle="#facc15";
+ctx.fillRect(ballX,ballY,ballSize,ballSize);
+
+ballX+=speedX;
+ballY+=speedY;
+
+if(ballY<=0||ballY>=canvas.height-ballSize)speedY=-speedY;
+
+if(ballX<=paddleWidth&&ballY>playerY&&ballY<playerY+paddleHeight){
+speedX=-speedX;
+score++;
+document.getElementById("pongScore").innerText=score;
+}
+
+if(ballX>=canvas.width-paddleWidth-ballSize&&ballY>aiY&&ballY<aiY+paddleHeight){
+speedX=-speedX;
+}
+
+if(ballX<0||ballX>canvas.width){
+clearInterval(pongInterval);
+alert("Game Over 🏓");
+return;
+}
+
+aiY+=(ballY-(aiY+paddleHeight/2))*0.05;
+}
+
+pongInterval=setInterval(draw,20);
+}
 
 </script>
-
 </body>
 </html>
-
